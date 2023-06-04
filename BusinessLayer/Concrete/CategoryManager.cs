@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Abstract;
+using DataAccessLayer.EntityFrameWork;
 using DataAccessLayer.Repositories;
 using EntityLayer.Concrete;
 using System;
@@ -11,33 +12,37 @@ namespace BusinessLayer.Concrete
 {
     public class CategoryManager : ICategoryService
     {
+        EfCategoryRepository efCategoryRepository;
 
-        CategoryRepository categoryRepository = new CategoryRepository();   
+        public CategoryManager()
+        {
+        efCategoryRepository: new EfCategoryRepository();
+        }
 
         public void CategoryAdd(Category category)
         {
 
-            throw new NotImplementedException();
+          efCategoryRepository.Insert(category);
         }
 
         public void CategoryDelete(Category category)
         {
-            throw new NotImplementedException();
+            efCategoryRepository.Delete(category);
         }
 
         public void CategoryUpdate(Category category)
         {
-            throw new NotImplementedException();
+            efCategoryRepository.Update(category);
         }
 
         public Category GetById(int id)
         {
-            throw new NotImplementedException();
+            return efCategoryRepository.GetByID(id);
         }
 
         public List<Category> GetList()
         {
-            throw new NotImplementedException();
+            return efCategoryRepository.GetListAll();
         }
     }
 }
