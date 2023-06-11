@@ -1,0 +1,33 @@
+﻿
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<div class="tech-btm">
+    <h4>Mail bülteni abone ol</h4>
+    <p>Teknoloji, yazılım ve diğer bloglar.. </p>
+    <form method="post">
+        <input type="email" id="emailValue" placeholder="Email" required="" name="Mail">
+        <input type="submit" id="btn" value="Abone ol">
+    </form>
+
+</div>
+
+<script>
+    $('#btn').click(function () {
+        let values = {
+            Mail: $("#emailValue").val()
+        };
+
+        $.ajax({
+            type: "post",
+            url: "/NewsLetter/SubscribeMail/",
+            data: values,
+            success: function (func) {
+                let result = jQuery.parseJSON(func);
+                alert("abone olundu")
+            }
+        });
+
+    });
+</script>
