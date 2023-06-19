@@ -8,5 +8,11 @@ namespace BlogProjectCore.Controllers
         {
             return View();
         }
+
+        public PartialViewResult SocialMediaAbout()
+        {
+
+            return PartialView();    
+        }
     }
 }
