@@ -10,7 +10,7 @@ namespace BlogProjectCore.Controllers
 
         public IActionResult Index()
         {
-            var values = cm.TGetAll();
+            var values = cm.GetList();
             return View(values);
         }
     }

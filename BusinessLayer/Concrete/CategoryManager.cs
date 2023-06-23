@@ -20,9 +20,9 @@ namespace BusinessLayer.Concrete
             _categoryDal = categoryDal;
         }
 
-        public ICollection<Category> GetAllStatusActive()
+        public List<Category> GetList()
         {
-            throw new NotImplementedException();
+            return _categoryDal.GetListAll();
         }
 
         public void TAdd(Category t)
@@ -33,11 +33,6 @@ namespace BusinessLayer.Concrete
         public void TDelete(Category t)
         {
             _categoryDal.Delete(t);
-        }
-
-        public List<Category> TGetAll()
-        {
-            return _categoryDal.GetListAll().ToList();
         }
 
         public Category TGetById(int id)

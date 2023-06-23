@@ -18,7 +18,10 @@ namespace BusinessLayer.Concrete
             _aboutDal = aboutDal;
         }
 
-      
+        public List<About> GetList()
+        {
+            return _aboutDal.GetListAll();
+        }
 
         public void TAdd(About t)
         {

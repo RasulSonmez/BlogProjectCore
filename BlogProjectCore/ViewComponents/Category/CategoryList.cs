@@ -10,7 +10,7 @@ namespace BlogProjectCore.ViewComponents.Category
 
         public IViewComponentResult Invoke()
         {
-            var values = cm.TGetAll();
+            var values = cm.GetList();
             return View(values);
         }
     }
