@@ -97,7 +97,7 @@
                             <td class="py-1">@item.BlogID </td>
                             <td> <b> @item.BlogTitle </b>  </td>
                             <td> @(((DateTime)item.CreateDate).ToString("dd MMMM yyyy"))</td>
-                            <td> @item.CategoryID</td>
+                            <td> @item.Category.CategoryName</td>
                             <td>
                                 @if (item.BlogStatus)
                                 {<span class="badge badge-success">Aktif</span> }
@@ -164,7 +164,7 @@
                         )
 
                         setTimeout('', 3000);
-                        location.reload();
+                       window.location.reload();
                     }
 
                 }

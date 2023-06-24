@@ -38,7 +38,7 @@ namespace BlogProjectCore.Controllers
         public IActionResult BlogListByWriter(int id)
         {
             
-            var values = bm.GetBlogListByWriter(1);
+            var values = bm.GetListWithCategoryByWriterBm(1);
             return View(values);
         }
 
@@ -81,6 +81,66 @@ namespace BlogProjectCore.Controllers
            
             return View();
         }
+
+
+        public IActionResult BlogDelete(int id)
+        {
+            var value = bm.TGetById(id);
+            bm.TDelete(value);
+            return RedirectToAction("BlogListByWriter");
+        }
+
+
+        [HttpGet]
+        public IActionResult BlogEdit(int id)
+        {
+            var value = bm.TGetById(id);
+            List<SelectListItem> categoryValues = (from x in cm.GetList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.CategoryName,
+                                                       Value = x.CategoryID.ToString()
+                                                   }).ToList();
+            ViewBag.cv = categoryValues;
+            return View(value);
+        }
+
+        [HttpPost]
+        public IActionResult BlogEdit(Blog blog)
+        {
+
+         
+        
+            //var value = bm.GetBlogByID(blog.BlogId);
+            blog.WriterID = 1;
+
+            blog.CreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+            blog.BlogStatus = true;
+            bm.TUpdate(blog);
+        
+            return RedirectToAction("BlogListByWriter");
+
+
+
+
+        }
+
+
+        public IActionResult ChangeStatusBlog(int id)
+        {
+            var blogValue = bm.TGetById(id);
+            if (blogValue.BlogStatus)
+            {
+                blogValue.BlogStatus = false;
+            }
+            else
+            {
+                blogValue.BlogStatus = true;
+            }
+            bm.TUpdate(blogValue);
+            return RedirectToAction("BlogListByWriter");
+        }
+
 
     }
 }
