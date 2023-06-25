@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Abstract
 {
-    public interface IWriterService : IGenericService<Writer>
+    public interface INotificationService : IGenericService<Notification>
     {
-        List<Writer> GetWriterById(int id);
+        List<Notification> TGetAll3Last();
     }
 }

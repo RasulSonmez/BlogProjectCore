@@ -22,7 +22,7 @@ namespace BusinessLayer.Concrete
 
         public List<Category> GetList()
         {
-            return _categoryDal.GetListAll();
+            return _categoryDal.GetListAll().ToList();
         }
 
         public void TAdd(Category t)

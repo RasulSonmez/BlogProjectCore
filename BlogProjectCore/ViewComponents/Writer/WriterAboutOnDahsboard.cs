@@ -1,17 +1,23 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFrameWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogProjectCore.ViewComponents.Writer
 {
-    public class WriterNotifications : ViewComponent
+   
+
+    public class WriterAboutOnDahsboard : ViewComponent
     {
-        NotificationManager nm = new NotificationManager(new EfNotificationRepository());
+        WriterManager wm = new WriterManager(new EfWriterRepository());
+    
 
         public IViewComponentResult Invoke()
         {
-            var values = nm.GetList();
+
+            var values = wm.GetWriterById(3);
             return View(values);
         }
+
     }
 }
