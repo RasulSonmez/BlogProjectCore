@@ -1,6 +1,7 @@
 ﻿using BlogProjectCore.Models;
 using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFrameWork;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlogProjectCore.Controllers
@@ -19,8 +21,17 @@ namespace BlogProjectCore.Controllers
 
         WriterManager wm = new WriterManager(new EfWriterRepository());
 
+        [Authorize]
         public IActionResult Index()
         {
+            var usermail = User.Identity.Name;
+            ViewBag.mailName = usermail;
+
+            Context c = new Context();
+
+            var writerName = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterName).FirstOrDefault();
+            ViewBag.writerName = writerName;
+
             return View();
         }
 
@@ -37,7 +48,10 @@ namespace BlogProjectCore.Controllers
         [HttpGet]
         public IActionResult WriterEdit()
         {
-            var writervalues = wm.TGetById(4);
+            Context c = new Context();
+            var usermail = User.Identity.Name;
+            var writerID = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterID).FirstOrDefault();
+            var writervalues = wm.TGetById(writerID);
             return View(writervalues);
         }
 
