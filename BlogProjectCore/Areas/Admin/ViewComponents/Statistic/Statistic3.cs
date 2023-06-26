@@ -1,6 +1,14 @@
-﻿namespace BlogProjectCore.Areas.Admin.ViewComponents.Statistic
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace BlogProjectCore.Areas.Admin.ViewComponents.Statistic
 {
-    public class Statistic3
+    public class Statistic3 :ViewComponent
     {
+      
+        public IViewComponentResult Invoke()
+        {
+
+            return View();
+        }
     }
 }
