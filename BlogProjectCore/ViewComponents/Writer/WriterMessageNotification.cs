@@ -7,15 +7,14 @@ namespace BlogProjectCore.ViewComponents.Writer
     public class WriterMessageNotification : ViewComponent
     {
 
-        MessageManager mm = new MessageManager(new EFMessageRepository());
+        Message2Manager mm = new Message2Manager(new EfMessage2Repository());
         
 
         public IViewComponentResult Invoke()
         {
-            string p;
+            int id = 2;
 
-            p = "aliyildiz@gmail.com";
-            var values = mm.GetInboxListByWriter(p);
+            var values = mm.GetInboxListByWriter(id);
 
             return View(values);
         }
