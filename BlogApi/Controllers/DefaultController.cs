@@ -31,6 +31,18 @@ namespace BlogApi.Controllers
             return Ok();
         }
 
+        [HttpGet("{id}")]
+        public IActionResult EmployeeGet(int id)
+        {
+            using var c = new Context();
+            var value = c.Employees.Find(id);
+            if (value == null)
+            {
+                return NotFound();
+            }
+            return Ok(value);
+        }
+
         [HttpDelete("{id}")]
         public IActionResult EmployeeDelete(int id)
         {
@@ -47,6 +59,25 @@ namespace BlogApi.Controllers
                 return Ok(value);
             }
 
+        }
+
+        [HttpPut]
+        public IActionResult EmployeeUpdate(Employee employee)
+        {
+            using var c = new Context();
+            var value = c.Find<Employee>(employee.ID);
+            if (value == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                value.Name = employee.Name;
+                c.Update(value);
+                c.SaveChanges();
+                return Ok();
+
+            }
         }
 
 
