@@ -1,8 +1,10 @@
-﻿using DataAccessLayer.Concrete;
+﻿using BlogProjectCore.Models;
+using DataAccessLayer.Concrete;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,39 +13,52 @@ using System.Threading.Tasks;
 
 namespace BlogProjectCore.Controllers
 {
-
+    [AllowAnonymous]
     public class LoginController : Controller
     {
-        [AllowAnonymous]
-        public IActionResult Index()
+        private readonly SignInManager<AppUser> _signInManager;
+
+        public LoginController(SignInManager<AppUser> signInManager)
         {
-            return View();
+            _signInManager = signInManager;
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Index(Writer p)
+        [HttpGet]
+        public IActionResult Index()
         {
-            Context c = new Context();
-            var datavalue = c.Writers.FirstOrDefault(x => x.WriterMail == p.WriterMail && x.WriterPasword == p.WriterPasword);
 
-            if (datavalue != null)
+            return View(new UserSignInModel());
+        }
+
+   
+        [HttpPost]
+        public async Task<IActionResult> Index(UserSignInModel model)
+        {
+            if (ModelState.IsValid)
             {
-                var claims = new List<Claim>
+                var result = await _signInManager.PasswordSignInAsync(model.username, model.password, false, true);
+                if (result.Succeeded)
                 {
-                    new Claim(ClaimTypes.Name, p.WriterMail)
-                };
-
-                var useridentity = new ClaimsIdentity(claims, "a");
-                ClaimsPrincipal principal = new ClaimsPrincipal(useridentity);
-                await HttpContext.SignInAsync(principal);               
-                return RedirectToAction("Index", "Dashboard");
+                    return RedirectToAction("Index", "Blog");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Kullanıcı adınız veya parolanız hatalı lütfen tekrar deneyiniz.";
+                    return View(model);
+                }
             }
-            else
-            {
-                return View();
-            }
+            return View(model);
+        }
 
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Login");
+        }
+
+        public IActionResult AccesDenied()
+        {
+            return View();
         }
     }
 }

@@ -1,3 +1,6 @@
+
+using DataAccessLayer.Concrete;
+using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +29,16 @@ namespace BlogProjectCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<Context>();
+            services.AddIdentity<AppUser, AppRole>(x =>
+            {
+                x.Password.RequireNonAlphanumeric = false;
+                x.Password.RequireUppercase = false;
+
+            }).AddEntityFrameworkStores<Context>();
+         
+
             services.AddControllersWithViews();
 
             services.AddSession();

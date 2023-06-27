@@ -4,14 +4,16 @@ using DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230627172917_mig_add_newidentity")]
+    partial class mig_add_newidentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,9 +172,6 @@ namespace DataAccessLayer.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -500,9 +499,6 @@ namespace DataAccessLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("WriterAbout")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WriterBirthDate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WriterImage")
